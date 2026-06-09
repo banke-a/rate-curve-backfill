@@ -1,0 +1,94 @@
+{
+  "k_evaluation": [
+    {
+      "k": 3,
+      "mae_bp": 5.17,
+      "rmse_bp": 9.34
+    },
+    {
+      "k": 5,
+      "mae_bp": 5.2,
+      "rmse_bp": 8.97
+    },
+    {
+      "k": 7,
+      "mae_bp": 5.27,
+      "rmse_bp": 8.9
+    },
+    {
+      "k": 10,
+      "mae_bp": 5.59,
+      "rmse_bp": 9.16
+    }
+  ],
+  "metrics": {
+    "linear": {
+      "method": "Linear",
+      "mae_bp": 4.77,
+      "rmse_bp": 7.49,
+      "max_error_bp": 50.5,
+      "mae_stress_bp": 7.69,
+      "rmse_stress_bp": 11.3,
+      "n_reconstructed": 1012,
+      "n_stress_reconstructed": 265,
+      "mae_DGS1MO_bp": 5.0,
+      "mae_DGS3MO_bp": 3.52,
+      "mae_DGS6MO_bp": 3.88,
+      "mae_DGS1_bp": 2.88,
+      "mae_DGS2_bp": 4.6,
+      "mae_DGS3_bp": 4.54,
+      "mae_DGS5_bp": 5.43,
+      "mae_DGS7_bp": 7.23,
+      "mae_DGS10_bp": 5.38,
+      "mae_DGS20_bp": 5.29,
+      "mae_DGS30_bp": 4.27
+    },
+    "forward_fill": {
+      "method": "Forward Fill",
+      "mae_bp": 7.42,
+      "rmse_bp": 11.9,
+      "max_error_bp": 101.0,
+      "mae_stress_bp": 13.21,
+      "rmse_stress_bp": 19.06,
+      "n_reconstructed": 1012,
+      "n_stress_reconstructed": 265,
+      "mae_DGS1MO_bp": 7.9,
+      "mae_DGS3MO_bp": 6.4,
+      "mae_DGS6MO_bp": 5.41,
+      "mae_DGS1_bp": 4.64,
+      "mae_DGS2_bp": 7.29,
+      "mae_DGS3_bp": 7.64,
+      "mae_DGS5_bp": 6.82,
+      "mae_DGS7_bp": 10.5,
+      "mae_DGS10_bp": 7.97,
+      "mae_DGS20_bp": 10.26,
+      "mae_DGS30_bp": 5.88
+    },
+    "knn_k5": {
+      "method": "KNN (k=5)",
+      "mae_bp": 5.2,
+      "rmse_bp": 8.97,
+      "max_error_bp": 75.13,
+      "mae_stress_bp": 10.17,
+      "rmse_stress_bp": 14.68,
+      "n_reconstructed": 1012,
+      "n_stress_reconstructed": 265,
+      "mae_DGS1MO_bp": 8.33,
+      "mae_DGS3MO_bp": 6.77,
+      "mae_DGS6MO_bp": 5.22,
+      "mae_DGS1_bp": 6.15,
+      "mae_DGS2_bp": 4.44,
+      "mae_DGS3_bp": 3.62,
+      "mae_DGS5_bp": 4.73,
+      "mae_DGS7_bp": 5.63,
+      "mae_DGS10_bp": 3.73,
+      "mae_DGS20_bp": 5.03,
+      "mae_DGS30_bp": 3.49
+    }
+  },
+  "threshold_checks": {
+    "mae_full_pass": true,
+    "mae_stress_pass": true,
+    "max_error_pass": false
+  }
+}
