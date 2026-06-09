@@ -90,5 +90,6 @@
     "mae_full_pass": true,
     "mae_stress_pass": true,
     "max_error_pass": false
-  }
+  },
+  "anomalies_explained": 3
 }

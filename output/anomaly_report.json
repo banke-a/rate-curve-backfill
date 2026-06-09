@@ -1,0 +1,129 @@
+[
+  {
+    "date": "2008-09-26",
+    "event_summary": "The failure of Washington Mutual and unprecedented money market fund disruptions caused extreme dysfunction in short-term funding markets, driving massive flight-to-quality flows into the shortest Treasury bills.",
+    "market_narrative": "On September 26, 2008, Washington Mutual was seized by regulators and sold to JPMorgan Chase, marking the largest bank failure in US history. This occurred amid continuing chaos in money market funds following the Reserve Primary Fund's breaking of the buck on September 16th. The combination of these events created unprecedented stress in short-term funding markets, with commercial paper markets effectively frozen and money market funds facing massive redemption pressures. Investors fled to the safety of the shortest-dated Treasury bills, particularly 1-month paper, driving yields down 18 basis points while 3-month bills actually rose 11 basis points due to supply-demand imbalances and technical factors in the bill auction cycle.\n\nThe extreme curve steepening between 1-month and 3-month Treasuries reflected the complete breakdown of normal arbitrage relationships in money markets. Traditional spread relationships between different short-term instruments collapsed as credit risk premiums spiked and liquidity vanished from private money markets. The Federal Reserve's emergency lending facilities were not yet fully operational, leaving markets to function in a severely distressed state where only the shortest government paper was viewed as truly safe.\n\nThis created an unprecedented curve shape where 1-month yields traded at just 21 basis points while longer tenors remained relatively elevated, representing a fundamental regime change from normal market functioning where such extreme inversions between adjacent short-term maturities simply did not occur outside of technical settlement issues.",
+    "reconstruction_challenge": "The extreme short-end inversion and breakdown of normal arbitrage relationships between adjacent Treasury bill maturities had no historical precedent, making algorithmic models trained on normal market periods unable to predict such severe structural dislocations.",
+    "context": {
+      "date": "2008-09-26",
+      "curve_yields_pct": {
+        "1 Month": 0.21,
+        "3 Month": 0.87,
+        "6 Month": 1.54,
+        "1 Year": 1.81,
+        "2 Year": 2.11,
+        "3 Year": 2.38,
+        "5 Year": 3.05,
+        "7 Year": 3.41,
+        "10 Year": 3.85,
+        "20 Year": 4.44,
+        "30 Year": 4.36
+      },
+      "daily_moves_bp": {
+        "DGS1MO": -18.0,
+        "DGS3MO": 11.0,
+        "DGS6MO": -3.0,
+        "DGS1": -16.0,
+        "DGS2": -5.0,
+        "DGS3": -4.0,
+        "DGS5": -4.0,
+        "DGS7": -3.0,
+        "DGS10": -3.0,
+        "DGS20": -4.0,
+        "DGS30": -4.0
+      },
+      "reconstruction_errors_bp": {
+        "1 Month": 75.1,
+        "3 Month": 24.8,
+        "6 Month": 18.1,
+        "2 Year": 7.6,
+        "5 Year": 0.1
+      }
+    },
+    "tokens_used": 443
+  },
+  {
+    "date": "2008-09-22",
+    "event_summary": "The Federal Reserve announced its decision to maintain the federal funds rate at 2.00% despite escalating financial crisis pressures, surprising markets that expected aggressive easing following Lehman Brothers' collapse.",
+    "market_narrative": "On September 22, 2008, the FOMC concluded its two-day meeting by keeping the federal funds rate unchanged at 2.00%, defying widespread market expectations for a 50-75 basis point cut. This decision came just one week after Lehman Brothers' bankruptcy filing and amid the ongoing AIG bailout discussions, creating severe dislocations in money markets and funding conditions. The Fed's surprise hawkish stance, justified by concerns over inflation despite the deepening credit crisis, caused a dramatic steepening of the front end of the yield curve as money market rates surged on policy uncertainty and funding stress. The 3-month Treasury yield spiked 29 basis points as investors repriced the Fed's reaction function and money market funds faced unprecedented redemption pressures. This created an inverted relationship between 1-month (0.76%) and 3-month (1.28%) yields, reflecting severe dysfunction in short-term funding markets where term premiums exploded due to counterparty risk concerns. Meanwhile, longer-dated yields rose modestly as the market began pricing a prolonged period of financial instability and questioned the Fed's commitment to supporting the economy through monetary accommodation.",
+    "reconstruction_challenge": "The extreme front-end steepening and inversion pattern represented an unprecedented combination of monetary policy surprise and funding market breakdown that had no historical precedent for algorithmic models to reference.",
+    "context": {
+      "date": "2008-09-22",
+      "curve_yields_pct": {
+        "1 Month": 0.76,
+        "3 Month": 1.28,
+        "6 Month": 1.76,
+        "1 Year": 2.06,
+        "2 Year": 2.13,
+        "3 Year": 2.41,
+        "5 Year": 3.04,
+        "7 Year": 3.42,
+        "10 Year": 3.83,
+        "20 Year": 4.48,
+        "30 Year": 4.41
+      },
+      "daily_moves_bp": {
+        "DGS1MO": 1.0,
+        "DGS3MO": 29.0,
+        "DGS6MO": 22.0,
+        "DGS1": 1.0,
+        "DGS2": -3.0,
+        "DGS3": -1.0,
+        "DGS5": 3.0,
+        "DGS7": 5.0,
+        "DGS10": 5.0,
+        "DGS20": 6.0,
+        "DGS30": 5.0
+      },
+      "reconstruction_errors_bp": {
+        "1 Month": 53.7,
+        "2 Year": 17.3,
+        "10 Year": 6.8,
+        "20 Year": 1.4,
+        "30 Year": 3.9
+      }
+    },
+    "tokens_used": 380
+  },
+  {
+    "date": "2008-09-18",
+    "event_summary": "The Federal Reserve announced coordinated global central bank liquidity injections and the Treasury unveiled its plan for the Troubled Asset Relief Program (TARP) following the collapse of Lehman Brothers and AIG bailout.",
+    "market_narrative": "September 18, 2008 marked a critical intervention point during the most acute phase of the Global Financial Crisis. Following Lehman Brothers' bankruptcy on September 15 and the AIG bailout on September 16, Treasury Secretary Paulson announced the framework for TARP - a $700 billion program to purchase troubled assets from financial institutions. Simultaneously, the Federal Reserve coordinated with global central banks to provide massive dollar liquidity injections to address the severe funding crisis in money markets. The announcement of these unprecedented fiscal and monetary interventions created highly unusual yield curve dynamics. The very front end of the curve (1-month and 3-month) rose sharply by 19-20 basis points as money markets remained severely dislocated despite intervention promises, while the 6-month tenor fell 24 basis points as markets began pricing in more aggressive Federal Reserve easing. The rest of the curve steepened modestly as longer-term rates rose 6-15 basis points, reflecting concerns about the fiscal implications of the bailout programs and uncertainty about their ultimate effectiveness in stabilizing the financial system.",
+    "reconstruction_challenge": "This date represents an unprecedented policy regime change with simultaneous fiscal and monetary interventions of unparalleled scale, creating yield curve dynamics with no historical precedent for algorithmic models to reference.",
+    "context": {
+      "date": "2008-09-18",
+      "curve_yields_pct": {
+        "1 Month": 0.26,
+        "3 Month": 0.23,
+        "6 Month": 0.79,
+        "1 Year": 1.53,
+        "2 Year": 1.78,
+        "3 Year": 2.05,
+        "5 Year": 2.67,
+        "7 Year": 3.08,
+        "10 Year": 3.54,
+        "20 Year": 4.19,
+        "30 Year": 4.14
+      },
+      "daily_moves_bp": {
+        "DGS1MO": 19.0,
+        "DGS3MO": 20.0,
+        "DGS6MO": -24.0,
+        "DGS1": 3.0,
+        "DGS2": 14.0,
+        "DGS3": 14.0,
+        "DGS5": 15.0,
+        "DGS7": 15.0,
+        "DGS10": 13.0,
+        "DGS20": 7.0,
+        "DGS30": 6.0
+      },
+      "reconstruction_errors_bp": {
+        "1 Month": 5.4,
+        "6 Month": 52.9,
+        "10 Year": 16.4
+      }
+    },
+    "tokens_used": 366
+  }
+]

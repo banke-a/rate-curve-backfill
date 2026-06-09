@@ -2,17 +2,17 @@
 run.py — Pipeline entry point
 
 Usage:
-    Full pipeline:
+    Full pipeline including LLM anomaly explanation:
         python run.py
 
-    Ingest only:
-        python run.py --ingest-only
-
-    Through gap analysis only:
-        python run.py --analyse-only
+    Skip LLM stage:
+        python run.py --skip-llm
 
     Use cached FRED data:
         python run.py --use-cache
+
+    Through gap analysis only:
+        python run.py --analyse-only
 """
 
 import argparse
@@ -23,7 +23,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from pipeline import ingest, validate, analyse_gaps, impute_baseline, impute_knn, evaluate
+from pipeline import (
+    ingest, validate, analyse_gaps,
+    impute_baseline, impute_knn, evaluate,
+    anomaly_explain
+)
 
 load_dotenv()
 
@@ -44,8 +48,11 @@ def main():
     parser = argparse.ArgumentParser(description="Rate Curve Backfilling Pipeline")
     parser.add_argument("--ingest-only", action="store_true")
     parser.add_argument("--analyse-only", action="store_true")
+    parser.add_argument("--skip-llm", action="store_true", help="Skip LLM anomaly explanation stage")
     parser.add_argument("--use-cache", action="store_true")
     parser.add_argument("--k", type=int, default=5, help="KNN k value (default 5)")
+    parser.add_argument("--error-threshold", type=float, default=50.0,
+                        help="Error threshold in bp for LLM explanation (default 50)")
     args = parser.parse_args()
 
     for d in [DATA_DIR, OUTPUT_DIR, PLOTS_DIR]:
@@ -59,7 +66,7 @@ def main():
         df_raw.to_csv(CACHE_PATH)
 
     if args.ingest_only:
-        logger.info(f"Shape: {df_raw.shape} | Date range: {df_raw.index.min().date()} to {df_raw.index.max().date()}")
+        logger.info(f"Shape: {df_raw.shape}")
         return
 
     # Stage 2 — Validate
@@ -98,11 +105,8 @@ def main():
     metrics_ffill = evaluate.compute_metrics(df_clean, df_ffill, mask, label="Forward Fill")
     metrics_knn = evaluate.compute_metrics(df_clean, df_knn, mask, label=f"KNN (k={args.k})")
 
-    # Threshold checks
-    logger.info("Checking success thresholds")
     thresholds = evaluate.check_thresholds(metrics_knn)
 
-    # Visualisations
     evaluate.plot_error_by_tenor(
         [metrics_linear, metrics_ffill, metrics_knn], PLOTS_DIR
     )
@@ -113,6 +117,24 @@ def main():
         df_clean, df_knn, df_linear, mask, "DGS7", PLOTS_DIR
     )
 
+    # Stage 6 — LLM anomaly explanation
+    anomaly_results = []
+    if not args.skip_llm:
+        logger.info(f"Stage 6 — LLM anomaly explanation (threshold={args.error_threshold}bp)")
+        anomaly_results = anomaly_explain.explain_high_error_dates(
+            df_clean, df_knn, mask,
+            error_threshold_bp=args.error_threshold,
+            max_dates=10,
+        )
+        if anomaly_results:
+            anomaly_path = Path(OUTPUT_DIR) / "anomaly_report.json"
+            with open(anomaly_path, "w") as f:
+                json.dump(anomaly_results, f, indent=2, default=str)
+            logger.info(f"Anomaly report saved to {anomaly_path}")
+            logger.info(f"Explained {len(anomaly_results)} anomalous dates")
+    else:
+        logger.info("Stage 6 — Skipped (--skip-llm)")
+
     # Save results
     results = {
         "k_evaluation": k_results.to_dict(orient="records"),
@@ -122,20 +144,30 @@ def main():
             f"knn_k{args.k}": metrics_knn,
         },
         "threshold_checks": thresholds,
+        "anomalies_explained": len(anomaly_results),
     }
     results_path = Path(OUTPUT_DIR) / "backfill_metadata.json"
     with open(results_path, "w") as f:
         json.dump(results, f, indent=2, default=str)
-    logger.info(f"Results saved to {results_path}")
 
     # Summary
     logger.info("\n" + "="*60)
     logger.info("EVALUATION SUMMARY")
     logger.info("="*60)
-    for method, m in [("Linear", metrics_linear), ("Forward Fill", metrics_ffill), (f"KNN k={args.k}", metrics_knn)]:
-        logger.info(f"{method:20s} MAE={m['mae_bp']:5.2f}bp | Stress MAE={m['mae_stress_bp']:5.2f}bp | Max={m['max_error_bp']:6.2f}bp")
+    for method, m in [
+        ("Linear", metrics_linear),
+        ("Forward Fill", metrics_ffill),
+        (f"KNN k={args.k}", metrics_knn)
+    ]:
+        logger.info(
+            f"{method:20s} MAE={m['mae_bp']:5.2f}bp | "
+            f"Stress MAE={m['mae_stress_bp']:5.2f}bp | "
+            f"Max={m['max_error_bp']:6.2f}bp"
+        )
     logger.info("="*60)
     logger.info(f"KNN threshold checks: {thresholds}")
+    if anomaly_results:
+        logger.info(f"Anomalous dates explained: {len(anomaly_results)}")
 
 
 if __name__ == "__main__":
