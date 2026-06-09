@@ -1,0 +1,27 @@
+# Data ingestion
+fredapi>=0.5.0
+
+# Data processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Imputation
+scikit-learn>=1.4.0
+
+# Validation
+pandera>=0.18.0
+
+# Visualisation
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# LLM
+anthropic>=0.25.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+
+# Testing
+pytest>=8.0.0
+pytest-cov>=5.0.0
