@@ -72,7 +72,7 @@ def compute_metrics(
         "method": label,
         "mae_bp": round(float(np.mean(errors)), 2),
         "rmse_bp": round(float(np.sqrt(np.mean(errors ** 2))), 2),
-        "max_error_bp": round(float(np.max(errors)), 2),
+        "max_error_bp": round(float(np.max(errors)) if len(errors) > 0 else 0.0, 2),
         "mae_stress_bp": round(float(np.mean(errors_stress)), 2) if len(errors_stress) > 0 else None,
         "rmse_stress_bp": round(float(np.sqrt(np.mean(errors_stress ** 2))), 2) if len(errors_stress) > 0 else None,
         "n_reconstructed": int(mask.sum().sum()),
